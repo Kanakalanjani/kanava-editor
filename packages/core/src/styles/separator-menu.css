@@ -1,0 +1,74 @@
+/* ---- Separator Menu ---- */
+.kanava-separator-menu {
+    background: #2d2d2d;
+    color: #e0e0e0;
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 200px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    font-family: var(--kanava-font-ui, "Inter", sans-serif);
+    font-size: 12px;
+}
+
+.kanava-sep-menu-header {
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+    padding: 4px 4px 8px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 8px;
+}
+
+.kanava-sep-menu-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+}
+
+.kanava-sep-menu-label {
+    flex: 0 0 44px;
+    font-size: 12px;
+    color: #bbb;
+}
+
+.kanava-sep-menu-toggle {
+    display: flex;
+    gap: 2px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.kanava-sep-menu-btn {
+    padding: 4px 10px;
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 11px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.kanava-sep-menu-btn:hover {
+    background: #3a3a3a;
+}
+
+.kanava-sep-menu-btn.active {
+    background: var(--kanava-accent-color, #4285f4);
+    color: #fff;
+}
+
+.kanava-sep-menu-slider {
+    flex: 1;
+    accent-color: var(--kanava-accent-color, #4285f4);
+}
+
+.kanava-sep-menu-value {
+    flex: 0 0 28px;
+    text-align: right;
+    font-size: 11px;
+    color: #999;
+}

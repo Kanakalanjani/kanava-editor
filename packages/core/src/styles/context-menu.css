@@ -1,0 +1,89 @@
+/* ---- Right-click Context Menu ---- */
+.kanava-context-menu {
+    position: absolute;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 4px;
+    min-width: 200px;
+    z-index: 100;
+    user-select: none;
+}
+
+.kanava-ctx-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 7px 12px;
+    font-size: 13px;
+    color: #333;
+    border: none;
+    background: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.kanava-ctx-item:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.kanava-ctx-item:disabled,
+.kanava-ctx-item.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.kanava-ctx-icon {
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.kanava-ctx-label {
+    flex: 1;
+}
+
+.kanava-ctx-shortcut {
+    font-size: 11px;
+    color: #999;
+    margin-left: auto;
+}
+
+.kanava-ctx-caret {
+    font-size: 10px;
+    color: #999;
+    margin-left: auto;
+}
+
+.kanava-ctx-divider {
+    height: 1px;
+    background: #e8e8e8;
+    margin: 3px 8px;
+}
+
+/* ---- Submenu support ---- */
+.kanava-ctx-item-wrap {
+    position: relative;
+}
+
+.kanava-ctx-submenu {
+    position: absolute;
+    left: calc(100% + 4px);
+    top: -4px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 4px;
+    min-width: 180px;
+    z-index: 101;
+    user-select: none;
+}
+
+.kanava-ctx-item.has-submenu {
+    padding-right: 8px;
+}

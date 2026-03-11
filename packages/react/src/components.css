@@ -1,0 +1,338 @@
+/* ---- ColorPicker ---- */
+.kanava-color-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  width: 240px;
+}
+
+/* Saturation / Value gradient panel */
+.kanava-cp-satval {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 6px;
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.kanava-cp-satval-white {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #fff, transparent);
+}
+
+.kanava-cp-satval-black {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, #000);
+}
+
+.kanava-cp-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Hue slider */
+.kanava-cp-hue {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(to right,
+    #f00 0%, #ff0 17%, #0f0 33%, #0ff 50%,
+    #00f 67%, #f0f 83%, #f00 100%);
+  cursor: pointer;
+}
+
+.kanava-cp-hue-thumb {
+  position: absolute;
+  top: -2px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0,0,0,0.4);
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: inherit;
+}
+
+/* Controls row: preview + hex input + eyedropper */
+.kanava-cp-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kanava-cp-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+
+.kanava-cp-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  padding: 0;
+}
+
+.kanava-cp-swatch:hover {
+  transform: scale(1.15);
+}
+
+.kanava-cp-swatch-active {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--kanava-accent-color, #4285f4);
+}
+
+.kanava-cp-input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-family: monospace;
+  min-width: 0;
+}
+
+.kanava-cp-input:focus {
+  border-color: var(--kanava-accent-color, #4285f4);
+}
+
+.kanava-cp-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.kanava-cp-eyedropper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: #555;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.kanava-cp-eyedropper:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* ---- FontPicker ---- */
+.kanava-font-picker {
+  position: relative;
+  display: inline-block;
+}
+
+.kanava-fp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #333;
+  min-width: 120px;
+  text-align: left;
+  transition: border-color 0.15s;
+}
+
+.kanava-fp-trigger:hover {
+  border-color: #999;
+}
+
+.kanava-fp-caret {
+  margin-left: auto;
+  font-size: 10px;
+  color: #888;
+}
+
+.kanava-fp-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  width: 200px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.kanava-fp-search {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: none;
+  border-bottom: 1px solid #eee;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.kanava-fp-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.kanava-fp-option {
+  display: block;
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #333;
+  transition: background 0.1s;
+}
+
+.kanava-fp-option:hover {
+  background: #f5f5f5;
+}
+
+.kanava-fp-option-active {
+  background: #e8f0fe;
+  color: var(--kanava-accent-color, #4285f4);
+  font-weight: 600;
+}
+
+.kanava-fp-empty {
+  padding: 10px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+/* ---- LinkPreviewCard ---- */
+.kanava-link-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.kanava-lp-url {
+  color: var(--kanava-accent-color, #1a73e8);
+  text-decoration: none;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kanava-lp-url:hover {
+  text-decoration: underline;
+}
+
+.kanava-lp-actions {
+  display: flex;
+  gap: 2px;
+}
+
+.kanava-lp-btn {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  transition: background 0.1s;
+  padding: 0;
+}
+
+.kanava-lp-btn:hover {
+  background: #f0f0f0;
+}
+
+.kanava-lp-btn-danger:hover {
+  background: #fdecea;
+  color: #e74c3c;
+}
+
+/* ---- ZoomControls ---- */
+
+.kanava-zoom-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--kanava-ui-font, system-ui, -apple-system, sans-serif);
+  font-size: 13px;
+}
+
+.kanava-zoom-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--kanava-fr-text, #374151);
+}
+
+.kanava-zoom-btn:hover:not(:disabled) {
+  background: var(--kanava-fr-hover, #f3f4f6);
+}
+
+.kanava-zoom-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.kanava-zoom-level {
+  min-width: 42px;
+  height: 28px;
+  padding: 0 4px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--kanava-fr-text, #374151);
+  text-align: center;
+}
+
+.kanava-zoom-level:hover {
+  background: var(--kanava-fr-hover, #f3f4f6);
+}

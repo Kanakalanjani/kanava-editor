@@ -1,0 +1,124 @@
+/* ====================================================
+   Pagination — Split-Page Canvases
+   ==================================================== */
+
+/*
+ * DOM structure (from pagination.ts createPageBreakWidget):
+ *   .kanava-page-break
+ *     .kanava-page-break-edge.kanava-page-break-bottom  (prev page bottom margin)
+ *     .kanava-page-break-gap                            (visible gap)
+ *       .kanava-page-break-label                        (page number)
+ *     .kanava-page-break-edge.kanava-page-break-top     (next page top margin)
+ */
+.kanava-page-break {
+    position: relative;
+    /* Pull out to full page width, past the content padding */
+    margin-left: calc(-1 * var(--kanava-page-margin-left));
+    margin-right: calc(-1 * var(--kanava-page-margin-right));
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Shared edge styles — simulates the white page margin area */
+.kanava-page-break-edge {
+    background: var(--kanava-bg-color, #fff);
+}
+
+/* Bottom margin of previous page */
+.kanava-page-break-bottom {
+    height: var(--kanava-page-margin-bottom);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Top margin of next page */
+.kanava-page-break-top {
+    height: var(--kanava-page-margin-top);
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Gap between pages — playground background visible */
+.kanava-page-break-gap {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+/* Page number badge in the gap */
+.kanava-page-break-label {
+    font-size: 9px;
+    font-weight: 500;
+    color: #b0b0b0;
+    background: transparent;
+    padding: 2px 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: auto;
+}
+
+
+/* ---- Overflow Indicator ---- */
+
+.kanava-overflow {
+    outline: 2px dashed #e53935 !important;
+    outline-offset: 2px;
+    position: relative;
+}
+
+.kanava-overflow::after {
+    content: "\26A0  Block exceeds page height";
+    position: absolute;
+    top: -22px;
+    right: 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: #e53935;
+    background: #fff;
+    padding: 1px 8px;
+    border-radius: 3px;
+    border: 1px solid #ef9a9a;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* ---- Print / Export ---- */
+@media print {
+    .kanava-page-break {
+        height: 0;
+        margin: 0;
+        page-break-before: always;
+        break-before: page;
+    }
+
+    .kanava-page-break-edge,
+    .kanava-page-break-gap,
+    .kanava-page-break-label {
+        display: none;
+    }
+
+    .kanava-overflow::after {
+        display: none;
+    }
+
+    .kanava-overflow {
+        outline: none !important;
+    }
+
+    .kanava-format-bar,
+    .kanava-fixed-toolbar,
+    .kanava-context-menu,
+    .kanava-block-picker {
+        display: none !important;
+    }
+
+    .kanava-paginated {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        width: auto;
+        min-height: auto;
+    }
+}

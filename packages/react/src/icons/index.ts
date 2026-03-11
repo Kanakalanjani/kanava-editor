@@ -1,0 +1,55 @@
+/* Icons — barrel export */
+
+export type { IconProps } from "./defaultIcons.js";
+export {
+  defaultIconMap,
+  AlignLeftIcon,
+  AlignCenterIcon,
+  AlignRightIcon,
+  AlignJustifyIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  CheckIcon,
+  CloseIcon,
+  PlusIcon,
+  MinusIcon,
+  TrashIcon,
+  DuplicateIcon,
+  UndoIcon,
+  RedoIcon,
+  LinkIcon,
+  ExternalLinkIcon,
+  EditIcon,
+  CropIcon,
+  RotateIcon,
+  AdjustmentsIcon,
+  FilterIcon,
+  ResizeIcon,
+  UploadIcon,
+  ImageIcon,
+  ColumnsIcon,
+  Columns3Icon,
+  Columns4Icon,
+  ParagraphIcon,
+  InsertBelowIcon,
+  AddColumnLeftIcon,
+  AddColumnRightIcon,
+  TurnIntoIcon,
+  SearchIcon,
+  GripIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  ReplaceIcon,
+} from "./defaultIcons.js";
+
+export type {
+  IconResolver,
+  KanavaIconProviderProps,
+  KanavaIconComponentProps,
+} from "./IconContext.js";
+export {
+  defaultIconResolver,
+  KanavaIconProvider,
+  useIconResolver,
+  KanavaIcon,
+} from "./IconContext.js";

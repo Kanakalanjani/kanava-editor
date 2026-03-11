@@ -1,0 +1,22 @@
+/* ---- Print / PDF ---- */
+@media print {
+
+    .kanava-drag-handle {
+        display: none !important;
+    }
+
+    /* Hide resize gutters but keep visible separators */
+    .kanava-column-gutter {
+        pointer-events: none !important;
+        cursor: default !important;
+        display: none !important;
+    }
+
+    .kanava-column-gutter.kanava-separator-visible {
+        display: block !important;
+    }
+
+    .kanava-column-gutter.kanava-separator-visible::after {
+        opacity: 1 !important;
+    }
+}

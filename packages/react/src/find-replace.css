@@ -1,0 +1,172 @@
+/* ── FindReplaceBar ─────────────────────────────────── */
+
+.kanava-find-replace-bar {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px 8px;
+  background: var(--kanava-fr-bg, #fff);
+  border: 1px solid var(--kanava-fr-border, #d1d5db);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: var(--kanava-ui-font, system-ui, -apple-system, sans-serif);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.kanava-fr-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 28px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--kanava-fr-text, #374151);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.kanava-fr-toggle:hover {
+  background: var(--kanava-fr-hover, #f3f4f6);
+}
+
+.kanava-fr-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.kanava-fr-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Input wrapper with icon + count badge */
+.kanava-fr-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.kanava-fr-input-icon {
+  position: absolute;
+  left: 6px;
+  color: var(--kanava-fr-icon, #9ca3af);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.kanava-fr-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 28px 0 26px;
+  margin: 0;
+  font-size: 13px;
+  font-family: inherit;
+  line-height: 28px;
+  color: var(--kanava-fr-text, #374151);
+  background: var(--kanava-fr-input-bg, #f9fafb);
+  border: 1px solid var(--kanava-fr-input-border, #e5e7eb);
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.kanava-fr-input:focus {
+  border-color: var(--kanava-accent-color, #4285f4);
+  box-shadow: 0 0 0 1px var(--kanava-accent-color, #4285f4);
+}
+
+.kanava-fr-match-count {
+  position: absolute;
+  right: 6px;
+  font-size: 11px;
+  color: var(--kanava-fr-muted, #9ca3af);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Option toggles (Aa, ab, .*) */
+.kanava-fr-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 4px;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--kanava-fr-text, #374151);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.kanava-fr-option:hover {
+  background: var(--kanava-fr-hover, #f3f4f6);
+}
+
+.kanava-fr-option--active {
+  color: var(--kanava-accent-color, #4285f4);
+  background: var(--kanava-fr-active-bg, rgba(66, 133, 244, 0.08));
+  border-color: var(--kanava-accent-color, #4285f4);
+}
+
+/* Navigation + replace buttons */
+.kanava-fr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--kanava-fr-text, #374151);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.kanava-fr-btn:hover:not(:disabled) {
+  background: var(--kanava-fr-hover, #f3f4f6);
+}
+
+.kanava-fr-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.kanava-fr-close {
+  margin-left: 2px;
+}
+
+/* Chevron rotation for expand/collapse */
+.kanava-fr-chevron-open,
+.kanava-fr-chevron-closed {
+  transition: transform 0.15s;
+}
+
+.kanava-fr-chevron-closed {
+  transform: rotate(-90deg);
+}

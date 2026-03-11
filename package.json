@@ -1,0 +1,29 @@
+{
+  "name": "kanava-editor",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Open-source block-based canvas editor with columns and pagination",
+  "scripts": {
+    "dev": "pnpm --filter playground dev",
+    "build": "pnpm --filter @kanava/editor build && pnpm --filter @kanava/editor-react build",
+    "build:core": "pnpm --filter @kanava/editor build",
+    "build:react": "pnpm --filter @kanava/editor-react build",
+    "lint": "eslint packages/ apps/",
+    "typecheck": "tsc --build"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.30.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.2.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

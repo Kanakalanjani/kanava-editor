@@ -1,0 +1,101 @@
+{
+  "name": "@kanava/editor",
+  "version": "0.1.0-beta.1",
+  "description": "Headless block editor engine built on ProseMirror. Provides document model, commands, pagination, and layout primitives for building rich text editors.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "skills",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "editor",
+    "block-editor",
+    "prosemirror",
+    "rich-text",
+    "wysiwyg",
+    "notion",
+    "document-editor",
+    "headless",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kanakalanjani/kanava-editor.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/Kanakalanjani/kanava-editor#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "agents": {
+    "skills": [
+      {
+        "name": "kanava-core",
+        "path": "./skills/kanava-core"
+      },
+      {
+        "name": "kanava-blocks",
+        "path": "./skills/kanava-blocks"
+      },
+      {
+        "name": "kanava-security",
+        "path": "./skills/kanava-security"
+      }
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "nanoid": "^5.0.0",
+    "orderedmap": "^2.1.1"
+  },
+  "peerDependencies": {
+    "prosemirror-commands": "^1.5.0",
+    "prosemirror-dropcursor": "^1.8.0",
+    "prosemirror-gapcursor": "^1.3.0",
+    "prosemirror-history": "^1.4.0",
+    "prosemirror-inputrules": "^1.4.0",
+    "prosemirror-keymap": "^1.2.0",
+    "prosemirror-model": "^1.22.0",
+    "prosemirror-schema-list": "^1.4.0",
+    "prosemirror-state": "^1.4.0",
+    "prosemirror-transform": "^1.9.0",
+    "prosemirror-view": "^1.34.0"
+  },
+  "devDependencies": {
+    "prosemirror-commands": "^1.5.0",
+    "prosemirror-dropcursor": "^1.8.0",
+    "prosemirror-gapcursor": "^1.3.0",
+    "prosemirror-history": "^1.4.0",
+    "prosemirror-inputrules": "^1.4.0",
+    "prosemirror-keymap": "^1.2.0",
+    "prosemirror-model": "^1.22.0",
+    "prosemirror-schema-list": "^1.4.0",
+    "prosemirror-state": "^1.4.0",
+    "prosemirror-transform": "^1.9.0",
+    "prosemirror-view": "^1.34.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,571 @@
+/* ====================================================
+   Playground Styles — Modular Layout
+   ==================================================== */
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.playground {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Header ── */
+.pg-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 100;
+}
+
+.pg-header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.pg-title {
+  font-size: 17px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.pg-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #4285f4, #34a853);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ── Demo Tabs ── */
+.pg-demo-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.pg-demo-tab {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-demo-tab:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.pg-demo-tab.active {
+  background: #e8f0fe;
+  color: #1a73e8;
+  font-weight: 600;
+}
+
+.pg-demo-tab-icon {
+  font-size: 14px;
+}
+
+/* ── Header Right Controls ── */
+.pg-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pg-mode-toggle {
+  display: flex;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.pg-mode-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.15s ease;
+}
+
+.pg-mode-btn:not(:last-child) {
+  border-right: 1px solid #d0d0d0;
+}
+
+.pg-mode-btn:hover {
+  background: #f5f5f5;
+}
+
+.pg-mode-btn.active {
+  background: #4285f4;
+  color: #fff;
+}
+
+/* ── Density Switcher ── */
+.pg-density-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.pg-density-toggle .pg-mode-btn {
+  padding: 5px 8px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.pg-density-info-btn {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  background: #fff;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.pg-density-info-btn:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.pg-density-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 12px 14px;
+  z-index: 100;
+  min-width: 160px;
+  animation: pg-popover-in 0.15s ease;
+}
+
+@keyframes pg-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pg-density-popover-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+
+.pg-density-table {
+  width: 100%;
+  font-size: 11px;
+  border-collapse: collapse;
+}
+
+.pg-density-table td {
+  padding: 3px 0;
+  color: #666;
+}
+
+.pg-density-table td:last-child {
+  text-align: right;
+  font-weight: 600;
+  font-family: "SF Mono", "Consolas", monospace;
+  color: #333;
+}
+
+.pg-setup-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pg-setup-btn:hover {
+  background: #f0f0f0;
+}
+
+.pg-json-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #1e1e2e;
+  border-radius: 6px;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pg-json-btn:hover {
+  background: #313244;
+}
+
+/* ── Fixed Toolbar ── */
+.playground>.kanava-fixed-toolbar {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 90;
+}
+
+/* ── Main Area ── */
+.pg-main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  /* critical for flex children to scroll */
+}
+
+/* ── Block Picker (fixed sidebar) ── */
+.pg-block-picker-wrap {
+  flex-shrink: 0;
+  width: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid #e8e8e8;
+  background: #fafafa;
+  z-index: 10;
+}
+
+.pg-block-picker {
+  /* inherits BlockPicker component styles */
+}
+
+/* ── Editor Canvas ── */
+.pg-canvas-scroll {
+  flex: 1;
+  padding: 24px;
+  background: #e0e0e0;
+  overflow-y: auto;
+  min-width: 0;
+  /* prevent flex blowout */
+}
+
+.pg-canvas {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.pg-canvas .kanava-editor-container {
+  max-width: 100%;
+}
+
+.pg-canvas .kanava-editor.kanava-pageless {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-height: 400px;
+}
+
+/* ── Document Tree (right sidebar) ── */
+.pg-document-tree-wrap {
+  flex-shrink: 0;
+  width: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-left: 1px solid #e8e8e8;
+  background: #fafafa;
+  z-index: 10;
+}
+
+/* ── JSON Panel ── */
+.pg-json {
+  position: fixed;
+  bottom: 32px;
+  right: 24px;
+  width: 480px;
+  max-height: 50vh;
+  background: #1e1e2e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+}
+
+.pg-json-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: #181825;
+  color: #cdd6f4;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pg-json-header button {
+  padding: 4px 10px;
+  font-size: 12px;
+  background: #313244;
+  color: #cdd6f4;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pg-json-header button:hover {
+  background: #45475a;
+}
+
+.pg-json-content {
+  padding: 16px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #a6e3a1;
+  overflow: auto;
+  max-height: calc(50vh - 44px);
+  margin: 0;
+}
+
+/* ── Status Bar ── */
+.pg-status {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 24px;
+  font-size: 12px;
+  color: #888;
+  background: #fff;
+  border-top: 1px solid #e0e0e0;
+}
+
+.pg-status strong {
+  color: #555;
+}
+
+.pg-status-pages {
+  font-weight: 500;
+  color: #666;
+}
+
+/* ── Page Setup Dialog ── */
+.pg-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+
+.pg-dialog {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 32px;
+  width: 380px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.pg-dialog-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+.pg-dialog-field {
+  margin-bottom: 18px;
+}
+
+.pg-dialog-field>label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.pg-dialog-field select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Orientation toggle */
+.pg-dialog-orientation {
+  display: flex;
+  gap: 8px;
+}
+
+.pg-orient-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  color: #555;
+}
+
+.pg-orient-btn:hover {
+  border-color: #bbb;
+}
+
+.pg-orient-btn.active {
+  border-color: #4285f4;
+  color: #4285f4;
+  background: #e8f0fe;
+}
+
+.pg-orient-icon {
+  display: inline-block;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+}
+
+.pg-orient-icon.portrait {
+  width: 14px;
+  height: 20px;
+}
+
+.pg-orient-icon.landscape {
+  width: 20px;
+  height: 14px;
+}
+
+/* Margin inputs */
+.pg-dialog-margins {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pg-margin-input {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.pg-margin-input span {
+  font-size: 11px;
+  color: #888;
+}
+
+.pg-margin-input input {
+  padding: 7px 8px;
+  font-size: 13px;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pg-margin-input input:focus {
+  outline: none;
+  border-color: #4285f4;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.15);
+}
+
+/* Dialog actions */
+.pg-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.pg-dialog-cancel,
+.pg-dialog-apply {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pg-dialog-cancel {
+  background: #f0f0f0;
+  color: #555;
+}
+
+.pg-dialog-cancel:hover {
+  background: #e0e0e0;
+}
+
+.pg-dialog-apply {
+  background: #4285f4;
+  color: #fff;
+}
+
+.pg-dialog-apply:hover {
+  background: #3367d6;
+}

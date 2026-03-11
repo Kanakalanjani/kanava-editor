@@ -1,0 +1,84 @@
+/* ---- Document Tree (sidebar outline) ---- */
+.kanava-document-tree {
+    width: 220px;
+    border-right: 1px solid var(--kanava-border, #e0e0e0);
+    padding: 8px 0;
+    overflow-y: auto;
+    background: var(--kanava-surface, #fafafa);
+    display: flex;
+    flex-direction: column;
+}
+
+.kanava-dt-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--kanava-text-muted, #888);
+    padding: 4px 12px 8px;
+    border-bottom: 1px solid var(--kanava-border, #e0e0e0);
+    margin-bottom: 4px;
+}
+
+.kanava-dt-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.kanava-dt-node {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border: none;
+    background: none;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    color: var(--kanava-text, #333);
+    font-size: 12px;
+    line-height: 1.4;
+    transition: background-color 0.1s ease;
+    margin: 0 4px;
+    box-sizing: border-box;
+}
+
+.kanava-dt-node:hover {
+    background: var(--kanava-hover, #e8e8e8);
+}
+
+.kanava-dt-active {
+    background: var(--kanava-active, #dbeafe);
+    color: var(--kanava-accent, #2563eb);
+}
+
+.kanava-dt-active:hover {
+    background: var(--kanava-active, #dbeafe);
+}
+
+.kanava-dt-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.kanava-dt-label {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.kanava-dt-empty {
+    padding: 16px 12px;
+    font-size: 12px;
+    color: var(--kanava-text-muted, #999);
+    text-align: center;
+}

@@ -1,0 +1,857 @@
+/* ====================================================
+   Kanava Editor â€” Core Styles
+   ==================================================== */
+
+/* Modular CSS imports */
+@import "./columns.css";
+@import "./ghost-rail.css";
+@import "./print.css";
+@import "./format-bar.css";
+@import "./context-menu.css";
+@import "./fixed-toolbar.css";
+@import "./toolbar-primitives.css";
+@import "./block-picker.css";
+@import "./document-tree.css";
+@import "./paragraph-format-popover.css";
+@import "./separator-menu.css";
+@import "./pagination.css";
+
+/* ---- CSS Custom Properties (Theme Variables) ---- */
+:root {
+  /* Typography */
+  --kanava-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --kanava-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --kanava-font-size: 16px;
+  --kanava-line-height: 1.6;
+
+  /* Colors */
+  --kanava-text-color: #1a1a1a;
+  --kanava-text-muted: #666666;
+  --kanava-bg-color: #ffffff;
+  --kanava-bg-hover: rgba(0, 0, 0, 0.02);
+  --kanava-bg-selected: rgba(55, 53, 177, 0.08);
+  --kanava-border-color: #e0e0e0;
+  --kanava-border-color-strong: #c0c0c0;
+
+  /* Accent / highlight */
+  --kanava-accent-color: #3735b1;
+  --kanava-highlight-bg: #fff59d;
+  --kanava-link-color: #1976d2;
+
+  /* Shadows */
+  --kanava-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --kanava-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --kanava-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  /* Spacing */
+  --kanava-block-padding-vertical: 4px;
+  --kanava-paragraph-gap: 2px;
+  --kanava-indent-size: 24px;
+  --kanava-editor-padding: 24px;
+
+  /* Page dimensions (paginated mode) */
+  --kanava-page-width: 816px;
+  --kanava-page-height: 1056px;
+  --kanava-page-margin-top: 72px;
+  --kanava-page-margin-right: 96px;
+  --kanava-page-margin-bottom: 72px;
+  --kanava-page-margin-left: 96px;
+
+  /* Block-specific */
+  --kanava-code-bg: #f5f5f5;
+  --kanava-quote-border-color: #d0d0d0;
+  --kanava-callout-bg-info: #e3f2fd;
+  --kanava-callout-bg-warning: #fff3e0;
+  --kanava-callout-bg-error: #ffebee;
+  --kanava-callout-bg-success: #e8f5e9;
+
+  /* UI surfaces */
+  --kanava-font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --kanava-surface: #fafafa;
+  --kanava-border: #e0e0e0;
+  --kanava-text: #333333;
+  --kanava-text-secondary: #666666;
+  --kanava-hover: #e8e8e8;
+  --kanava-active: #dbeafe;
+  --kanava-divider-color: #e0e0e0;
+
+  /* Transitions */
+  --kanava-transition-fast: 0.1s ease;
+  --kanava-transition-normal: 0.2s ease;
+}
+
+/* ---- Reset & Base ---- */
+.kanava-editor {
+  font-family: var(--kanava-font-family);
+  font-size: var(--kanava-font-size);
+  line-height: var(--kanava-line-height);
+  color: var(--kanava-text-color);
+  outline: none;
+  padding: var(--kanava-editor-padding);
+  min-height: 200px;
+}
+
+.kanava-editor * {
+  box-sizing: border-box;
+}
+
+/* ---- Pageless mode ---- */
+.kanava-pageless {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ---- Paginated mode ---- */
+.kanava-paginated {
+  width: var(--kanava-page-width);
+  min-height: var(--kanava-page-height);
+  margin: 0 auto;
+  padding: var(--kanava-page-margin-top) var(--kanava-page-margin-right) var(--kanava-page-margin-bottom) var(--kanava-page-margin-left);
+  background: var(--kanava-bg-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #d4d4d4;
+  border-radius: 0;
+}
+
+/* ---- Block System ---- */
+.kanava-block {
+  position: relative;
+  margin: var(--kanava-paragraph-gap, 2px) 0;
+  padding: var(--kanava-block-padding-vertical) 4px;
+  border-radius: 4px;
+  transition: background-color var(--kanava-transition-fast);
+}
+
+.kanava-block:hover {
+  background-color: var(--kanava-bg-hover);
+}
+
+.kanava-block-content {
+  /* Content renders here */
+}
+
+/* Nested blocks (blockGroup inside blockNode) */
+.kanava-block-content>[data-node-type="blockGroup"] {
+  margin-left: var(--kanava-indent-size);
+  padding-left: 4px;
+  border-left: 2px solid var(--kanava-border-color);
+}
+
+/* ---- Paragraph ---- */
+.kanava-editor p {
+  margin: 0;
+  padding: 3px 0;
+}
+
+/* ---- Headings ---- */
+.kanava-editor h1,
+.kanava-editor h2,
+.kanava-editor h3,
+.kanava-editor h4,
+.kanava-editor h5,
+.kanava-editor h6 {
+  margin: 0;
+  padding: 3px 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.kanava-editor h1 {
+  font-size: 2em;
+  margin-top: 0.6em;
+  line-height: 1.2;
+}
+
+.kanava-editor h2 {
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  line-height: 1.25;
+}
+
+.kanava-editor h3 {
+  font-size: 1.25em;
+  margin-top: 0.4em;
+  line-height: 1.3;
+}
+
+.kanava-editor h4 {
+  font-size: 1.1em;
+}
+
+.kanava-editor h5 {
+  font-size: 1em;
+}
+
+.kanava-editor h6 {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* ---- Blockquote ---- */
+.kanava-editor blockquote {
+  margin: 4px 0;
+  padding: 4px 16px;
+  border-left: 4px solid #ddd;
+  color: #555;
+  background: #fafafa;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ---- Code Block ---- */
+.kanava-code-block {
+  margin: 8px 0;
+  border-radius: 8px;
+  background: #1e1e2e;
+  overflow: hidden;
+}
+
+.kanava-code-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+}
+
+.kanava-code-lang-select {
+  font-size: 12px;
+  padding: 2px 6px;
+  background: #313244;
+  color: #cdd6f4;
+  border: 1px solid #45475a;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.kanava-code-lang-select:focus {
+  border-color: #89b4fa;
+}
+
+.kanava-code-pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.kanava-code-content {
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas",
+    monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cdd6f4;
+  white-space: pre;
+}
+
+/* ---- Image ---- */
+.kanava-image-block {
+  margin: 8px 0;
+  text-align: center;
+}
+
+/* â”€â”€ Image alignment â”€â”€ */
+.kanava-image-align-left {
+  text-align: left;
+}
+
+.kanava-image-align-center {
+  text-align: center;
+}
+
+.kanava-image-align-right {
+  text-align: right;
+}
+
+.kanava-image-figure {
+  display: inline-block;
+  margin: 0;
+}
+
+.kanava-image-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.kanava-image {
+  max-width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, filter 0.2s ease;
+}
+
+.kanava-image:hover {
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+}
+
+.ProseMirror-selectednode .kanava-image {
+  box-shadow: 0 0 0 3px #4285f4;
+}
+
+/* â”€â”€ Editable caption â”€â”€ */
+.kanava-image-caption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  outline: none;
+  border: none;
+  min-height: 1.4em;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.kanava-image-caption:empty::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+}
+
+.kanava-image-caption.is-focused {
+  background: var(--kanava-code-bg, #f5f5f5);
+}
+
+/* ---- Image Resize Handles ---- */
+.kanava-image-resize-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--kanava-accent-color, #4285f4);
+  border: 2px solid var(--kanava-bg-color, #ffffff);
+  border-radius: 50%;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--kanava-transition-fast, 0.1s ease);
+}
+
+.ProseMirror-selectednode .kanava-image-resize-handle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.kanava-resize-nw {
+  top: -5px;
+  left: -5px;
+}
+
+.kanava-resize-ne {
+  top: -5px;
+  right: -5px;
+}
+
+.kanava-resize-sw {
+  bottom: -5px;
+  left: -5px;
+}
+
+.kanava-resize-se {
+  bottom: -5px;
+  right: -5px;
+}
+
+/* ---- Image Empty Placeholder (inserted with no source) ---- */
+.kanava-image-empty .kanava-image-figure,
+.kanava-image-uploading .kanava-image-figure {
+  position: relative;
+}
+
+.kanava-image-empty .kanava-image,
+.kanava-image-uploading .kanava-image {
+  min-height: 120px;
+  min-width: 200px;
+  background: var(--kanava-code-bg, #f5f5f5);
+  border: 2px dashed var(--kanava-border-color, #e0e0e0);
+}
+
+.kanava-image-empty .kanava-image-figure::before {
+  content: "\1F5BC  Drop an image here, paste, or click to insert";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-size: 14px;
+  color: var(--kanava-text-muted, #666);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.kanava-image-empty {
+  cursor: pointer;
+}
+
+.kanava-image-empty:hover .kanava-image,
+.kanava-image-empty:hover .kanava-image-figure {
+  border-color: var(--kanava-accent-color, #4285f4);
+  background: rgba(66, 133, 244, 0.04);
+}
+
+.kanava-image-dragover .kanava-image,
+.kanava-image-dragover .kanava-image-figure {
+  border-color: var(--kanava-accent-color, #4285f4);
+  background: rgba(66, 133, 244, 0.08);
+}
+
+/* ---- Image Upload Loading State ---- */
+.kanava-image-uploading .kanava-image-figure::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes kanava-image-pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Uploading state overrides the empty placeholder text */
+.kanava-image-uploading .kanava-image-figure::before {
+  content: "Uploading\2026";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-size: 14px;
+  color: var(--kanava-text-muted, #666);
+  animation: kanava-image-pulse 1.5s ease-in-out infinite;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---- Divider ---- */
+.kanava-editor hr {
+  border: none;
+  background: transparent;
+  margin: 2px auto;
+  padding: 6px 0;
+  position: relative;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+  background-clip: content-box;
+}
+
+.kanava-editor hr::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top-style: var(--kanava-divider-style, solid);
+  border-top-width: var(--kanava-divider-thickness, 2px);
+  border-top-color: var(--kanava-divider-color, #e0e0e0);
+  pointer-events: none;
+  display: block;
+}
+
+/* Hide caret in divider atom blocks — the blockNode wrapper can get
+   a text cursor placed at the edges of the hr; suppress it. */
+.kanava-block:has(> .kanava-block-content > hr) {
+  caret-color: transparent;
+}
+
+/* ---- Checklist ---- */
+.kanava-editor [data-node-type="checklistItem"] {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.kanava-editor [data-node-type="checklistItem"] input[type="checkbox"] {
+  margin-top: 5px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #4285f4;
+}
+
+.kanava-editor [data-checked="true"] {
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* Column Layout â€” see columns.css */
+
+/* ---- Drag Handle (hover overlay) ---- */
+.kanava-drag-handle {
+  position: absolute;
+  left: -16px;
+  top: 2px;
+  width: 16px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  color: var(--kanava-text-muted, #9ca3af);
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 3px;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, background-color 0.1s ease;
+  z-index: 10;
+}
+
+.kanava-block:hover>.kanava-drag-handle {
+  opacity: 1;
+}
+
+.kanava-drag-handle:hover {
+  opacity: 1;
+  background: var(--kanava-bg-hover, #f3f4f6);
+  color: var(--kanava-text-secondary, #4b5563);
+}
+
+.kanava-drag-handle:active {
+  cursor: grabbing;
+  background: var(--kanava-border-color, #e0e0e0);
+}
+
+/* ---- Placeholder ---- */
+.kanava-editor .ProseMirror p.kanava-placeholder::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  position: absolute;
+  pointer-events: none;
+  font-style: italic;
+}
+
+.kanava-editor .ProseMirror p.kanava-placeholder {
+  position: relative;
+}
+
+/* ---- Inline Marks ---- */
+.kanava-editor strong {
+  font-weight: 700;
+}
+
+.kanava-editor em {
+  font-style: italic;
+}
+
+.kanava-editor u {
+  text-decoration: underline;
+}
+
+.kanava-editor s {
+  text-decoration: line-through;
+}
+
+.kanava-editor code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.9em;
+  padding: 2px 5px;
+  background: #f1f3f5;
+  border-radius: 3px;
+  color: #e83e8c;
+}
+
+.kanava-editor a {
+  color: var(--kanava-link-color, #4285f4);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.kanava-editor a:hover {
+  text-decoration-color: var(--kanava-link-color, #4285f4);
+}
+
+.kanava-editor mark {
+  padding: 0;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* ---- Selection ---- */
+.kanava-editor .ProseMirror-selectednode {
+  outline: 2px solid #4285f4;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- Gap Cursor ---- */
+.kanava-editor .ProseMirror-gapcursor:after {
+  border-top: 1px solid black;
+}
+
+/* ---- Drop Cursor ---- */
+.kanava-drop-cursor {
+  height: 2px;
+  background: var(--kanava-accent-color, #3735b1);
+  border-radius: 1px;
+  margin: -1px 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 50;
+}
+
+/* Legacy prosemirror dropcursor (fallback) */
+.kanava-editor .ProseMirror-dropcursor {
+  height: 2px;
+  background: var(--kanava-accent-color, #3735b1);
+}
+
+/* ---- Focus Ring ---- */
+.kanava-editor:focus-within {
+  /* Optional focus indicator */
+}
+
+/* ---- Scrollbar (for code blocks) ---- */
+.kanava-code-pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.kanava-code-pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.kanava-code-pre::-webkit-scrollbar-thumb {
+  background: #45475a;
+  border-radius: 3px;
+}
+
+.kanava-code-pre::-webkit-scrollbar-thumb:hover {
+  background: #585b70;
+}
+
+/* ---- Bullet List Item ---- */
+.kanava-bullet-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.kanava-bullet-marker {
+  user-select: none;
+  color: #555;
+  font-size: 1.2em;
+  line-height: 1.5;
+  flex-shrink: 0;
+  width: 14px;
+  text-align: center;
+}
+
+.kanava-bullet-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Numbered List Item ---- */
+.kanava-numbered-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.kanava-number-marker {
+  user-select: none;
+  color: #555;
+  font-weight: 500;
+  line-height: 1.5;
+  flex-shrink: 0;
+  min-width: 18px;
+  text-align: right;
+}
+
+.kanava-number-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Toggle (Collapsible) ---- */
+.kanava-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.kanava-toggle-icon {
+  user-select: none;
+  cursor: pointer;
+  font-size: 10px;
+  line-height: 1.7;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+  color: #555;
+}
+
+.kanava-toggle.is-expanded>.kanava-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.kanava-toggle.is-collapsed+.kanava-block-group {
+  display: none;
+}
+
+.kanava-toggle-text {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+
+/* ---- Callout ---- */
+.kanava-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+
+.kanava-callout-info {
+  background: #e8f4fd;
+  border-left-color: #4285f4;
+}
+
+.kanava-callout-warning {
+  background: #fff8e1;
+  border-left-color: #fbbc04;
+}
+
+.kanava-callout-success {
+  background: #e8f5e9;
+  border-left-color: #34a853;
+}
+
+.kanava-callout-error {
+  background: #fce8e6;
+  border-left-color: #ea4335;
+}
+
+.kanava-callout-icon {
+  user-select: none;
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+
+.kanava-callout-text {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Column Resize Gutter â€” see columns.css */
+/* Block Picker â€” see block-picker.css */
+
+/* ---- Block Selection ---- */
+.kanava-block-focused {
+  /* Subtle left border on the focused block */
+}
+
+.kanava-block-focused>.kanava-drag-handle {
+  opacity: 0.6;
+}
+
+.kanava-block-selected {
+  outline: 2px solid #4285f4;
+  outline-offset: 1px;
+  border-radius: 4px;
+  background: rgba(66, 133, 244, 0.04);
+}
+
+.kanava-block-multi-selected {
+  background-color: var(--kanava-multi-select-bg, rgba(59, 130, 246, 0.08));
+  outline: 2px solid var(--kanava-multi-select-border, rgba(59, 130, 246, 0.25));
+  border-radius: var(--kanava-radius, 4px);
+}
+
+/* Format Bar - see format-bar.css */
+/* Context Menu - see context-menu.css */
+/* Fixed Toolbar - see fixed-toolbar.css */
+/* Toolbar Primitives (NumberStepper, SelectDropdown, SegmentedControl) - see toolbar-primitives.css */
+/* Paragraph Format Popover - see paragraph-format-popover.css */
+/* Pagination - see pagination.css */
+/* Separator Menu - see separator-menu.css */
+
+/* ---- Canvas Mode ---- */
+/* When interactionMode plugin is active, strip editing affordances for
+   a clean WYSIWYG experience. Blocks are selected whole on click. */
+.kanava-canvas-mode .kanava-block {
+  padding: 0;
+  border-radius: 0;
+}
+
+.kanava-canvas-mode .kanava-column-layout {
+  min-height: auto;
+}
+
+/* Restore breathing room for blocks with an explicit background color */
+.kanava-canvas-mode .kanava-block--has-bg {
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.kanava-canvas-mode .kanava-block:hover {
+  background-color: transparent;
+}
+
+.kanava-canvas-mode .kanava-drag-handle {
+  display: none;
+}
+
+.kanava-canvas-mode .kanava-rail-handle {
+  display: none;
+}
+
+.kanava-canvas-mode .kanava-block-content>[data-node-type="blockGroup"] {
+  margin-left: var(--kanava-indent-size);
+  border-left: none;
+}
+
+.kanava-canvas-mode .kanava-block-selected {
+  outline: 2px solid rgba(66, 133, 244, 0.5);
+  outline-offset: 0;
+  background: rgba(66, 133, 244, 0.03);
+  border-radius: 2px;
+}
+
+.kanava-canvas-mode .kanava-block-focused {
+  outline: 1px solid rgba(66, 133, 244, 0.3);
+  outline-offset: 0;
+  border-radius: 2px;
+}
+
+.kanava-canvas-mode .kanava-block-multi-selected {
+  outline-offset: 0;
+  border-radius: 2px;
+}
+
+/* ── Find & Replace ────────────────────────────────── */
+
+.kanava-find-match {
+  background: var(--kanava-find-match-bg, rgba(255, 213, 79, 0.4));
+  border-radius: 2px;
+}
+
+.kanava-find-current {
+  background: var(--kanava-find-current-bg, rgba(255, 152, 0, 0.6));
+  outline: 2px solid var(--kanava-find-current-outline, rgba(255, 152, 0, 0.8));
+  outline-offset: -1px;
+  border-radius: 2px;
+}

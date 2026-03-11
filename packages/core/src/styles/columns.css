@@ -1,0 +1,194 @@
+/* ---- Column Layout ---- */
+.kanava-column-layout {
+    position: relative;
+    margin: 8px 0;
+    padding: 4px;
+    min-height: 48px;
+    border: 1px dashed transparent;
+    border-radius: 6px;
+    transition: border-color 0.15s ease;
+}
+
+/* Active resize state — applied to editor root during column drag */
+.kanava-resizing,
+.kanava-resizing * {
+    user-select: none !important;
+    cursor: col-resize !important;
+}
+
+/* During resize: force columns to allow shrinking past content intrinsic width */
+.kanava-resizing .kanava-column {
+    overflow: hidden;
+}
+
+.kanava-column-layout:hover {
+    border-color: #d0d0d0;
+}
+
+.kanava-column-layout-inner {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.kanava-column {
+    flex-basis: 0;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.kanava-column:hover {
+    border-color: #e0e0e0;
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+/* Column takes flex-grow from inline style */
+
+/* ---- Column Resize Gutter ---- */
+.kanava-column-gutter-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.kanava-column-gutter {
+    position: absolute;
+    width: 12px;
+    cursor: col-resize;
+    pointer-events: auto;
+    user-select: none;
+}
+
+.kanava-column-gutter::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 5px;
+    width: 2px;
+    background: transparent;
+    border-radius: 1px;
+    transition: background 0.15s ease;
+}
+
+.kanava-column-gutter:hover::after,
+.kanava-column-gutter.is-dragging::after {
+    background: var(--kanava-accent-color, #4285f4);
+}
+
+/* Keyboard focus ring on gutters (B3) */
+.kanava-column-gutter:focus {
+    outline: none;
+}
+
+.kanava-column-gutter:focus-visible::after {
+    background: var(--kanava-accent-color, #4285f4);
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+}
+
+/* ---- Column Width Labels ---- */
+.kanava-column-pct-label {
+    position: absolute;
+    top: -22px;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--kanava-accent-color, #4285f4);
+    background: var(--kanava-bg-color, #fff);
+    border: 1px solid var(--kanava-border-color, #e0e0e0);
+    border-radius: 3px;
+    padding: 2px 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    animation: kanava-pct-fade-in 0.1s ease forwards;
+}
+
+.kanava-column-width-label--at-min {
+    color: #ef4444;
+    border-color: #fca5a5;
+}
+
+/* ---- Gutter at-minimum state ---- */
+.kanava-gutter--at-min {
+    cursor: not-allowed !important;
+}
+
+@keyframes kanava-pct-fade-in {
+    to { opacity: 1; }
+}
+
+/* ---- Compact Layout Mode ---- */
+.kanava-layout-compact .kanava-column-layout {
+    padding: 0;
+    margin: 0;
+    border: none;
+    min-height: auto;
+}
+
+.kanava-layout-compact .kanava-column-layout:hover {
+    border-color: transparent;
+}
+
+.kanava-layout-compact .kanava-column-layout-inner {
+    gap: 4px;
+}
+
+.kanava-layout-compact .kanava-column {
+    padding: 0;
+    border: none;
+}
+
+.kanava-layout-compact .kanava-column:hover {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+/* ---- Column Block Spacing Tightening ---- */
+/* Remove top margin on first block and bottom margin on last block
+   inside columns so single-row layouts don't have excess space. */
+.kanava-column > .kanava-block:first-child {
+    margin-top: 0;
+}
+
+.kanava-column > .kanava-block:last-child {
+    margin-bottom: 0;
+}
+
+/* ---- Column Content Overflow Fix ---- */
+.kanava-column img,
+.kanava-column video,
+.kanava-column iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+.kanava-column pre,
+.kanava-column table {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* ---- Visible Separator ---- */
+.kanava-column-gutter.kanava-separator-visible::after {
+    background: var(--kanava-sep-color, var(--kanava-accent-color, #4285f4));
+    width: var(--kanava-sep-width, 2px);
+    opacity: 0.6;
+}
+
+.kanava-column-gutter.kanava-separator-visible:hover::after {
+    opacity: 1;
+    width: calc(var(--kanava-sep-width, 2px) + 2px);
+}

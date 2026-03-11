@@ -1,0 +1,94 @@
+/* ---- Ghost Rail ---- */
+/* Hierarchy indicators shown when hovering nested blocks.
+   Uses Decoration.node to add .kanava-ghost-rail-active class.
+   ::before draws the rail line. .kanava-rail-handle shows the clickable dot. */
+
+/* Depth color palette — customizable via CSS custom properties */
+:root {
+    --kanava-rail-depth-1: rgba(66, 133, 244, 0.5);
+    --kanava-rail-depth-2: rgba(0, 150, 136, 0.5);
+    --kanava-rail-depth-3: rgba(76, 175, 80, 0.5);
+    --kanava-rail-depth-4: rgba(156, 39, 176, 0.5);
+    --kanava-rail-depth-5: rgba(255, 152, 0, 0.5);
+}
+
+/* The vertical rail line — ::before on the block wrapper */
+.kanava-ghost-rail-active::before {
+    content: "";
+    position: absolute;
+    left: calc(-6px * var(--rail-depth, 1) - 8px);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rail-color, rgba(66, 133, 244, 0.5));
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 8;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+/* Fade in on hover */
+.kanava-ghost-rail-active:hover::before,
+.kanava-ghost-rail-active::before {
+    opacity: 1;
+}
+
+/* Rail handle (clickable) — rendered by BlockNodeView, hidden by default */
+.kanava-rail-handle {
+    display: none;
+    position: absolute;
+    left: calc(-6px * var(--rail-depth, 1) - 11px);
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rail-color, rgba(66, 133, 244, 0.5));
+    border: 1.5px solid white;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 9;
+    transition: transform 0.1s ease, background 0.1s ease;
+}
+
+/* Show handle when ghost rail active */
+.kanava-ghost-rail-active>.kanava-rail-handle {
+    display: block;
+}
+
+/* Handle hover state */
+.kanava-ghost-rail-active>.kanava-rail-handle:hover {
+    transform: scale(1.4);
+    background: var(--rail-color, rgba(66, 133, 244, 0.8));
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Breadcrumb tooltip — shows ancestor path when ghost rails are visible */
+.kanava-ghost-rail-breadcrumb {
+    font-size: 11px;
+    line-height: 1;
+    color: var(--kanava-rail-depth-1);
+    background: var(--kanava-ui-bg, #fff);
+    border: 1px solid var(--kanava-border-color, #e0e0e0);
+    border-radius: 4px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    opacity: 0;
+    animation: kanava-rail-fade-in 0.15s ease forwards;
+}
+
+@keyframes kanava-rail-fade-in {
+    to { opacity: 1; }
+}
+
+/* Hide in print */
+@media print {
+
+    .kanava-rail-handle,
+    .kanava-ghost-rail-active::before,
+    .kanava-ghost-rail-breadcrumb {
+        display: none !important;
+    }
+}

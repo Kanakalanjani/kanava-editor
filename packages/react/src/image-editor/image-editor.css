@@ -1,0 +1,559 @@
+/* ══════════════════════════════════════════════════════════════
+   Image Editor Modal — Styles
+   ══════════════════════════════════════════════════════════════ */
+
+/* Backdrop */
+.kanava-ie-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: kanava-ie-fadeIn 0.15s ease-out;
+}
+
+@keyframes kanava-ie-fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal container — A4 width (794px @ 96 DPI) */
+.kanava-ie-modal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    width: 794px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: kanava-ie-slideUp 0.2s ease-out;
+}
+
+@keyframes kanava-ie-slideUp {
+    from {
+        transform: translateY(16px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header */
+.kanava-ie-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.kanava-ie-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.kanava-ie-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.kanava-ie-close:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* Tabs */
+.kanava-ie-tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 20px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.kanava-ie-tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.kanava-ie-tab:hover {
+    color: #333;
+}
+
+.kanava-ie-tab-active {
+    color: #1a73e8;
+    border-bottom-color: #1a73e8;
+}
+
+/* Preview — half-A4 max height (~562px), scrolls if image is larger */
+.kanava-ie-preview {
+    position: relative;
+    margin: 16px 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    overflow: auto;
+    min-height: 200px;
+    max-height: 562px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.kanava-ie-preview-zoomed {
+    cursor: grab;
+}
+
+.kanava-ie-preview-zoomed:active {
+    cursor: grabbing;
+}
+
+/**
+ * Shrink-wraps the rendered image so crop overlay percentages (left, top)
+ * map 1:1 to image pixels rather than to the full flex container.
+ * Without this, letterboxed/pillarboxed images show misaligned handles.
+ */
+.kanava-ie-img-wrapper {
+    position: relative;
+    display: inline-block;
+    line-height: 0; /* eliminates the whitespace gap below <img> */
+}
+
+.kanava-ie-preview-img {
+    display: block;
+    max-width: 750px;
+    max-height: 540px;
+    transition: transform 0.15s ease, filter 0.15s ease;
+    user-select: none;
+    pointer-events: none;
+    transform-origin: center center;
+}
+
+/* Zoom indicator */
+.kanava-ie-zoom-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 2px 8px;
+    border-radius: 4px;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 5;
+    user-select: none;
+}
+
+/* Crop mask */
+.kanava-ie-crop-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.kanava-ie-crop-mask-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Crop region */
+.kanava-ie-crop-region {
+    position: absolute;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+    cursor: move;
+    z-index: 2;
+}
+
+/* Crop grid (rule of thirds) */
+.kanava-ie-crop-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.kanava-ie-crop-grid-h,
+.kanava-ie-crop-grid-v {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.kanava-ie-crop-grid-h {
+    left: 0;
+    right: 0;
+    height: 1px;
+}
+
+.kanava-ie-crop-grid-v {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+}
+
+/* Crop handles */
+.kanava-ie-crop-handle {
+    position: absolute;
+    z-index: 3;
+}
+
+.kanava-ie-h-nw,
+.kanava-ie-h-ne,
+.kanava-ie-h-sw,
+.kanava-ie-h-se {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    cursor: nwse-resize;
+}
+
+.kanava-ie-h-ne,
+.kanava-ie-h-sw {
+    cursor: nesw-resize;
+}
+
+.kanava-ie-h-n,
+.kanava-ie-h-s {
+    width: 24px;
+    height: 6px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    cursor: ns-resize;
+}
+
+.kanava-ie-h-e,
+.kanava-ie-h-w {
+    width: 6px;
+    height: 24px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    cursor: ew-resize;
+}
+
+/* Controls */
+.kanava-ie-controls {
+    padding: 12px 20px 16px;
+    border-top: 1px solid #f0f0f0;
+    flex-shrink: 0;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+/* Transform controls (combined crop + rotate) */
+.kanava-ie-transform-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kanava-ie-section-divider {
+    height: 1px;
+    background: #eee;
+    margin: 4px 0;
+}
+
+.kanava-ie-aspect-ratios {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.kanava-ie-crop-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Section labels & shape row */
+.kanava-ie-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.kanava-ie-shape-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+/* Shared buttons */
+.kanava-ie-reset-btn {
+    font-size: 12px;
+    padding: 5px 12px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #555;
+    transition: background 0.15s;
+}
+
+.kanava-ie-reset-btn:hover:not(:disabled) {
+    background: #eee;
+}
+
+.kanava-ie-reset-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.kanava-ie-info {
+    font-size: 12px;
+    color: #999;
+}
+
+.kanava-ie-preset-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.15s;
+}
+
+.kanava-ie-preset-btn:hover {
+    background: #eee;
+}
+
+.kanava-ie-preset-active {
+    background: #e8f0fe;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
+
+/* Slider rows */
+.kanava-ie-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.kanava-ie-slider-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    min-width: 70px;
+}
+
+.kanava-ie-slider {
+    flex: 1;
+    accent-color: #1a73e8;
+    height: 4px;
+}
+
+.kanava-ie-degree {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Filter controls */
+.kanava-ie-filter-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kanava-ie-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.kanava-ie-filter-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.kanava-ie-filter-thumb:hover {
+    background: #f5f5f5;
+}
+
+.kanava-ie-filter-active {
+    border-color: #1a73e8;
+    background: #e8f0fe;
+}
+
+.kanava-ie-filter-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.kanava-ie-filter-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* Adjust controls */
+.kanava-ie-adjust-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kanava-ie-adjust-controls .kanava-ie-reset-btn {
+    margin-top: 8px;
+    align-self: flex-start;
+}
+
+/* Rotate controls */
+.kanava-ie-rotate-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kanava-ie-rotate-presets {
+    display: flex;
+    gap: 6px;
+}
+
+/* Footer */
+.kanava-ie-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px 16px;
+    border-top: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.kanava-ie-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.kanava-ie-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kanava-ie-undo-btn,
+.kanava-ie-redo-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #555;
+    transition: background 0.15s, opacity 0.15s;
+}
+
+.kanava-ie-undo-btn:hover:not(:disabled),
+.kanava-ie-redo-btn:hover:not(:disabled) {
+    background: #eee;
+}
+
+.kanava-ie-undo-btn:disabled,
+.kanava-ie-redo-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.kanava-ie-original-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.kanava-ie-cancel-btn {
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #555;
+    transition: background 0.15s;
+}
+
+.kanava-ie-cancel-btn:hover {
+    background: #eee;
+}
+
+.kanava-ie-apply-btn {
+    padding: 8px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #1a73e8;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    transition: background 0.15s;
+}
+
+.kanava-ie-apply-btn:hover {
+    background: #1557b0;
+}
