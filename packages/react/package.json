@@ -8,10 +8,9 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./styles.css": "./dist/styles.css"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
   "files": [
     "dist",
@@ -35,7 +34,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kanakalanjani/kanava-editor.git",
+    "url": "git+https://github.com/Kanakalanjani/kanava-editor.git",
     "directory": "packages/react"
   },
   "homepage": "https://github.com/Kanakalanjani/kanava-editor#readme",
