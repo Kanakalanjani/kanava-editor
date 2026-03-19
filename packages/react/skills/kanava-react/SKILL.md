@@ -39,7 +39,7 @@ npm install @kanava/editor @kanava/editor-react
 
 ```tsx
 import { KanavaEditorComponent } from "@kanava/editor-react";
-import "@kanava/editor/dist/styles.css";
+import "@kanava/editor/styles/editor.css";
 
 function App() {
   return (

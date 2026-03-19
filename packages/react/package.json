@@ -15,6 +15,7 @@
   "files": [
     "dist",
     "skills",
+    "AI_CONTEXT.md",
     "README.md",
     "LICENSE"
   ],

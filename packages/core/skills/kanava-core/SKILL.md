@@ -37,7 +37,7 @@ npm install @kanava/editor
 
 ```ts
 import { KanavaEditor } from "@kanava/editor";
-import "@kanava/editor/dist/styles.css";
+import "@kanava/editor/styles/editor.css";
 
 const editor = new KanavaEditor({
   element: document.getElementById("editor")!,
