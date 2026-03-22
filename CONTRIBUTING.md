@@ -14,8 +14,9 @@ Thank you for your interest in contributing! Kanava is a ProseMirror-based block
 git clone https://github.com/Kanakalanjani/kanava-editor.git
 cd kanava-editor
 pnpm install
+pnpm run setup:dev   # one-time: wires up git hooks and local file protection
 pnpm -r build
-pnpm dev          # starts playground at localhost:5173
+pnpm dev             # starts playground at localhost:5173
 ```
 
 ## Monorepo Structure
@@ -69,6 +70,16 @@ These files are maintained by the core team:
 - `.agent/rules/` configuration
 - Root `package.json` scripts
 - `.changeset/config.json`
+
+### Private / local-only files
+
+Some files may exist on your machine for local development context but must **never** be committed. They are listed in [`.privatefiles`](./.privatefiles).
+
+The `setup:dev` script activates two protection layers:
+- **`.git/info/exclude`** — git treats listed files as ignored (invisible to `git status`, safe from `git add .`)
+- **`.githooks/pre-commit`** — blocks any commit that accidentally stages a listed path
+
+If you need to keep local notes, planning docs, or machine-specific configs, add them to `.privatefiles` and re-run `pnpm run setup:dev`.
 
 ## Code Patterns
 

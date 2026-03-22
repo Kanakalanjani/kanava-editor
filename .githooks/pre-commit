@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit
+#
+# Blocks commits containing files listed in .privatefiles.
+# These files may exist locally for AI context / debugging but must not
+# be pushed to the public GitHub remote.
+#
+# ACTIVATE (one-time per machine):
+#   pnpm run setup:dev
+#   — or manually: git config core.hooksPath .githooks
+#
+# To bypass in an emergency (use with care):
+#   git commit --no-verify
+
+PRIVATE_LIST=".privatefiles"
+
+# Nothing to check if the list doesn't exist
+if [ ! -f "$PRIVATE_LIST" ]; then
+  exit 0
+fi
+
+# Get the list of files staged for this commit
+STAGED=$(git diff --cached --name-only 2>/dev/null)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+BLOCKED=()
+
+while IFS= read -r pattern || [ -n "$pattern" ]; do
+  # Skip blank lines and comments
+  [[ "$pattern" =~ ^[[:space:]]*$ ]] && continue
+  [[ "$pattern" =~ ^# ]]            && continue
+
+  # Check if any staged file path contains this pattern as a substring
+  if echo "$STAGED" | grep -qF "$pattern"; then
+    # Collect the specific staged paths that matched
+    while IFS= read -r match; do
+      BLOCKED+=("$match  [matched pattern: $pattern]")
+    done < <(echo "$STAGED" | grep -F "$pattern")
+  fi
+done < "$PRIVATE_LIST"
+
+if [ ${#BLOCKED[@]} -gt 0 ]; then
+  echo ""
+  echo "  ✗ COMMIT BLOCKED — private file(s) staged for commit:"
+  echo ""
+  for entry in "${BLOCKED[@]}"; do
+    echo "      $entry"
+  done
+  echo ""
+  echo "  These files are listed in .privatefiles and must not be pushed"
+  echo "  to the public GitHub remote."
+  echo ""
+  echo "  To unstage:  git restore --staged <file>"
+  echo "  To bypass:   git commit --no-verify  (use with care)"
+  echo ""
+  exit 1
+fi
+
+exit 0

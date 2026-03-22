@@ -1,0 +1,736 @@
+/* ============================================================
+   Resume Builder — App Styles
+   Light theme: blue accents, warm grays, white chrome
+   ============================================================ */
+
+/* ---- Theme Variables (Tailwind palette) ---- */
+:root {
+    /* App shell */
+    --rb-app-bg: #f1f5f9;          /* slate-100 */
+    --rb-app-text: #1e293b;        /* slate-800 */
+
+    /* Chrome (header, footer, sidebar backgrounds) */
+    --rb-chrome-bg: #ffffff;       /* white */
+    --rb-chrome-border: #e2e8f0;   /* slate-200 */
+
+    /* Canvas area behind the paper */
+    --rb-canvas-bg: #e2e8f0;      /* slate-200 */
+
+    /* Text hierarchy */
+    --rb-text-primary: #0f172a;    /* slate-900 */
+    --rb-text-secondary: #475569;  /* slate-600 */
+    --rb-text-muted: #94a3b8;     /* slate-400 */
+    --rb-text-subtle: #94a3b8;    /* slate-400 */
+
+    /* Surfaces (inputs, value boxes) */
+    --rb-surface: #f8fafc;        /* slate-50 */
+    --rb-surface-border: #cbd5e1; /* slate-300 */
+
+    /* Buttons */
+    --rb-btn-border: #cbd5e1;     /* slate-300 */
+    --rb-btn-text: #475569;       /* slate-600 */
+    --rb-btn-hover: #f1f5f9;      /* slate-100 */
+    --rb-btn-active: #e2e8f0;     /* slate-200 */
+
+    /* Accent (primary blue) */
+    --rb-accent: #3b82f6;         /* blue-500 */
+    --rb-accent-hover: #2563eb;   /* blue-600 */
+    --rb-accent-text: #ffffff;    /* white */
+
+    /* Status colors */
+    --rb-warning: #f59e0b;        /* amber-500 */
+    --rb-danger-bg: #fef2f2;      /* red-50 */
+    --rb-danger-text: #dc2626;    /* red-600 */
+    --rb-danger-border: #fecaca;  /* red-200 */
+    --rb-danger-hover: #fee2e2;   /* red-100 */
+
+    /* Paper */
+    --rb-paper-bg: #ffffff;       /* white */
+    --rb-paper-text: #0f172a;     /* slate-900 */
+    --rb-paper-shadow: 0 1px 6px rgba(0, 0, 0, 0.10);
+
+    /* Sidebar / picker overrides */
+    --rb-picker-text: #475569;     /* slate-600 */
+    --rb-picker-hover: #f1f5f9;    /* slate-100 */
+    --rb-picker-hover-border: #cbd5e1; /* slate-300 */
+}
+
+/* ---- App Shell ---- */
+.rb-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: var(--rb-app-bg);
+    color: var(--rb-app-text);
+}
+
+/* ---- Header ---- */
+.rb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 16px;
+    background: var(--rb-chrome-bg);
+    border-bottom: 1px solid var(--rb-chrome-border);
+    flex-shrink: 0;
+    gap: 16px;
+}
+
+.rb-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.rb-logo {
+    font-size: 20px;
+}
+
+.rb-app-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--rb-text-primary);
+}
+
+.rb-doc-name {
+    font-size: 13px;
+    color: var(--rb-text-muted);
+    padding-left: 10px;
+    border-left: 1px solid var(--rb-chrome-border);
+}
+
+.rb-header-center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.rb-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.rb-header-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--rb-btn-border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--rb-btn-text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.rb-header-btn:hover {
+    background: var(--rb-btn-hover);
+    border-color: var(--rb-surface-border);
+}
+
+.rb-header-btn-primary {
+    background: var(--rb-accent);
+    border-color: var(--rb-accent);
+    color: var(--rb-accent-text);
+}
+
+.rb-header-btn-primary:hover {
+    background: var(--rb-accent-hover);
+}
+
+/* ---- Main Layout ---- */
+.rb-main {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* ---- Tabs (Edit / Preview) ---- */
+.rb-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 16px;
+    background: var(--rb-chrome-bg);
+    border-bottom: 1px solid var(--rb-chrome-border);
+    flex-shrink: 0;
+}
+
+.rb-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--rb-text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.rb-tab:hover {
+    color: var(--rb-text-primary);
+}
+
+.rb-tab-active {
+    color: var(--rb-accent);
+    border-bottom-color: var(--rb-accent);
+}
+
+/* ---- Canvas (editor area) ---- */
+.rb-canvas-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 32px 24px;
+    background: var(--rb-canvas-bg);
+}
+
+.rb-canvas {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Paper appearance for paginated editor */
+.rb-canvas .kanava-editor-container {
+    background: var(--rb-paper-bg);
+    color: var(--rb-paper-text);
+    border-radius: 2px;
+    box-shadow: var(--rb-paper-shadow);
+}
+
+/* Compact resume overrides — tighter than standard compact */
+.rb-canvas .kanava-editor {
+    font-family: "Libre Baskerville", Georgia, "Times New Roman", serif;
+    font-size: 10pt;
+    line-height: 1.45;
+}
+
+.rb-canvas .kanava-editor h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.rb-canvas .kanava-editor h2 {
+    font-size: 12pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    color: var(--rb-text-secondary);
+}
+
+.rb-canvas .kanava-editor h3 {
+    font-size: 11pt;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* ---- Floating Panel Triggers ---- */
+.rb-floating-trigger {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rb-chrome-border);
+    border-radius: 10px;
+    background: var(--rb-chrome-bg);
+    color: var(--rb-text-secondary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.rb-floating-trigger:hover {
+    background: var(--rb-btn-hover);
+    color: var(--rb-text-primary);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.rb-floating-trigger-left {
+    left: 12px;
+}
+
+.rb-floating-trigger-right {
+    right: 12px;
+}
+
+/* ---- Floating Panel ---- */
+.rb-floating-panel {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    background: var(--rb-chrome-bg);
+    border: 1px solid var(--rb-chrome-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.rb-floating-panel-left {
+    left: 56px;
+    transform: translateY(-50%) translateX(-16px);
+}
+
+.rb-floating-panel-left.rb-floating-panel-open {
+    transform: translateY(-50%) translateX(0);
+}
+
+.rb-floating-panel-right {
+    right: 56px;
+    transform: translateY(-50%) translateX(16px);
+}
+
+.rb-floating-panel-right.rb-floating-panel-open {
+    transform: translateY(-50%) translateX(0);
+}
+
+.rb-floating-panel-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sleek scrollbar */
+.rb-floating-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.rb-floating-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.rb-floating-panel::-webkit-scrollbar-thumb {
+    background: var(--rb-chrome-border);
+    border-radius: 2px;
+}
+
+.rb-floating-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--rb-text-muted);
+}
+
+/* ---- Panel Tabs (inside right floating panel) ---- */
+.rb-panel-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--rb-chrome-border);
+}
+
+.rb-panel-tab {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--rb-text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.rb-panel-tab:hover {
+    color: var(--rb-text-primary);
+}
+
+.rb-panel-tab-active {
+    color: var(--rb-accent);
+    border-bottom-color: var(--rb-accent);
+}
+
+/* ---- Layout Sidebar (inside panel) ---- */
+.rb-layout-sidebar {
+    /* No width/border — container provided by FloatingPanel */
+}
+
+.rb-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--rb-text-primary);
+    margin-bottom: 4px;
+}
+
+.rb-sidebar-icon {
+    font-size: 16px;
+}
+
+.rb-sidebar-sub {
+    font-size: 12px;
+    color: var(--rb-text-muted);
+    margin-bottom: 20px;
+}
+
+.rb-sidebar-section {
+    margin-bottom: 16px;
+}
+
+.rb-sidebar-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--rb-text-subtle);
+    margin-bottom: 6px;
+}
+
+.rb-sidebar-value {
+    font-size: 13px;
+    color: var(--rb-text-secondary);
+    padding: 6px 8px;
+    background: var(--rb-surface);
+    border-radius: 4px;
+    border: 1px solid var(--rb-surface-border);
+}
+
+.rb-sidebar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.rb-sidebar-row-label {
+    font-size: 11px;
+    color: var(--rb-text-subtle);
+    min-width: 80px;
+}
+
+.rb-sidebar-override {
+    font-size: 10px;
+    color: var(--rb-warning);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.rb-sidebar-reset-btn {
+    margin-top: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+    background: var(--rb-danger-bg);
+    color: var(--rb-danger-text);
+    border: 1px solid var(--rb-danger-border);
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.rb-sidebar-reset-btn:hover {
+    background: var(--rb-danger-hover);
+}
+
+.rb-sidebar-unit {
+    font-size: 11px;
+    color: var(--rb-text-muted);
+}
+
+/* ---- Margin Grid ---- */
+.rb-margin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.rb-margin-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rb-margin-item span {
+    font-size: 11px;
+    color: var(--rb-text-muted);
+}
+
+/* ---- NumberStepper theme overrides ---- */
+.rb-floating-panel .kanava-number-stepper {
+    background: var(--rb-surface);
+    border-color: var(--rb-surface-border);
+    color: var(--rb-app-text);
+}
+
+.rb-floating-panel .kanava-number-stepper button {
+    color: var(--rb-text-muted);
+    border-color: var(--rb-surface-border);
+}
+
+.rb-floating-panel .kanava-number-stepper button:hover {
+    background: var(--rb-btn-hover);
+    color: var(--rb-text-primary);
+}
+
+.rb-floating-panel .kanava-number-stepper input {
+    background: transparent;
+    color: var(--rb-app-text);
+}
+
+/* ---- FixedToolbar theme ---- */
+.rb-header .kanava-fixed-toolbar {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+/* ---- Block Picker inside floating panel ---- */
+.rb-floating-panel .kanava-block-picker {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.rb-floating-panel .kanava-bp-category-label {
+    color: var(--rb-text-subtle);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.rb-floating-panel .kanava-bp-item {
+    background: transparent;
+    color: var(--rb-picker-text);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 8px;
+}
+
+.rb-floating-panel .kanava-bp-item:hover {
+    background: var(--rb-picker-hover);
+    border-color: var(--rb-picker-hover-border);
+}
+
+/* ---- Footer (doc stats) ---- */
+.rb-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 28px;
+    padding: 0 16px;
+    background: var(--rb-chrome-bg);
+    border-top: 1px solid var(--rb-chrome-border);
+    flex-shrink: 0;
+}
+
+/* ---- Template Picker Modal ---- */
+.rb-template-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.rb-template-modal {
+    background: var(--rb-chrome-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 520px;
+    max-width: 90vw;
+    padding: 24px;
+}
+
+.rb-template-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.rb-template-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--rb-text-primary);
+    margin: 0;
+}
+
+.rb-template-close {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: var(--rb-text-muted);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.rb-template-close:hover {
+    background: var(--rb-btn-hover);
+    color: var(--rb-text-primary);
+}
+
+.rb-template-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rb-template-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--rb-surface);
+    border: 1px solid var(--rb-surface-border);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.rb-template-card:hover {
+    border-color: var(--rb-accent);
+    background: var(--rb-chrome-bg);
+}
+
+.rb-template-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.rb-template-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--rb-text-primary);
+    display: block;
+}
+
+.rb-template-desc {
+    font-size: 12px;
+    color: var(--rb-text-muted);
+    display: block;
+    margin-top: 2px;
+}
+
+/* ---- Save Manager ---- */
+.rb-save-modal {
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.rb-save-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.rb-save-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid var(--rb-surface-border);
+    border-radius: 6px;
+    background: var(--rb-surface);
+    color: var(--rb-app-text);
+    outline: none;
+}
+
+.rb-save-input:focus {
+    border-color: var(--rb-accent);
+}
+
+.rb-save-list {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rb-save-empty {
+    text-align: center;
+    color: var(--rb-text-muted);
+    font-size: 13px;
+    padding: 24px 0;
+}
+
+.rb-save-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--rb-surface);
+    border: 1px solid var(--rb-surface-border);
+    border-radius: 6px;
+}
+
+.rb-save-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.rb-save-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--rb-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rb-save-time {
+    font-size: 11px;
+    color: var(--rb-text-muted);
+}
+
+.rb-save-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.rb-save-delete {
+    color: var(--rb-danger-text);
+    border-color: var(--rb-danger-border);
+}
+
+.rb-save-delete:hover {
+    background: var(--rb-danger-hover);
+}
+
+.rb-doc-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--rb-text-muted);
+}
+
+.kanava-doc-stats-sep {
+    color: var(--rb-surface-border);
+}

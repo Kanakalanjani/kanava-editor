@@ -3,7 +3,7 @@ anchored-to:
   - packages/core/src/editor.ts
   - packages/core/src/editorHelpers.ts
   - packages/core/src/api/types.ts
-last-verified: 2025-06-07
+last-verified: 2026-03-20
 ---
 
 # Initialization & Configuration Guide
@@ -42,6 +42,7 @@ The constructor accepts a single `KanavaEditorOptions` object. All fields except
 | `onImageUpload` | `(file) => Promise<string>` | — | Image paste/drop handler |
 | `documentStyle` | `DocumentStyle` | `{}` | Document-level typography defaults |
 | `layoutMode` | `"standard" \| "compact"` | `"standard"` | Spacing density and drag handle style |
+| `canvasMode` | `boolean` | `false` | Canvas mode: click selects blocks, double-click edits text |
 
 ## Document style & density presets
 
@@ -94,14 +95,19 @@ The constructor installs plugins in this specific order (order matters for prior
 5. `placeholderPlugin` — empty-block placeholder text
 6. `dragHandlePlugin` — block drag handle overlay
 7. `selectionPlugin` — block selection highlighting
-8. `ghostRailPlugin` — insert-between-blocks rail
-9. `clipboardPlugin` — clipboard sanitization
-10. `imageUploadPlugin` — image paste/drop handling
-11. `toolbarStatePlugin` — derives toolbar/menu state
-12. Pagination plugins (conditional)
-13. `history` — undo/redo (ProseMirror built-in)
-14. `dropCursor` — drop position indicator
-15. `gapCursor` — cursor for positions without content
+8. `blockMultiSelectionPlugin` — cross-block multi-selection (Shift+click/arrow)
+9. `ghostRailPlugin` — insert-between-blocks rail (skipped in canvas mode)
+10. `documentStructurePlugin` — headless document tree data (always on)
+11. `clipboardPlugin` — clipboard sanitization
+12. `imageUploadPlugin` — image paste/drop handling
+13. `toolbarStatePlugin` — derives toolbar/menu state
+14. Pagination plugins (conditional)
+15. `interactionModePlugin` — canvas mode interactions (conditional)
+16. `findReplacePlugin` — find and replace across document
+17. `linkClickPlugin` — handles link click navigation
+18. `history` — undo/redo (ProseMirror built-in)
+19. `dropCursor` — drop position indicator
+20. `gapCursor` — cursor for positions without content
 
 > **Source of truth:** Plugin array at [editor.ts constructor](../core/src/editor.ts).
 
@@ -131,6 +137,12 @@ Custom blocks can provide a `nodeView` factory via `defineBlock()` — see [guid
 | `chain()` | `CommandChain` | Start a command chain for batching |
 | `setDocumentStyle(style)` | `void` | Update document-level styling |
 | `getDocumentStyle()` | `DocumentStyle` | Get resolved document style |
+| `getZoom()` | `number` | Get current zoom level (1 = 100%) |
+| `setZoom(level)` | `void` | Set zoom level |
+| `zoomIn()` | `void` | Increase zoom by one step |
+| `zoomOut()` | `void` | Decrease zoom by one step |
+| `resetZoom()` | `void` | Reset zoom to 100% |
+| `setPaginationConfig(config)` | `void` | Update pagination config at runtime |
 
 ### Events
 

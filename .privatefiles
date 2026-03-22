@@ -1,0 +1,53 @@
+# .privatefiles — patterns that must NEVER be committed to the public GitHub remote.
+#
+# These files may exist locally on a developer's machine for AI agent context,
+# debugging, or personal workflow, but their contents are not ready for public view.
+#
+# HOW THIS WORKS
+# ──────────────
+# 1. .githooks/pre-commit reads this file and blocks git commit if any staged
+#    file path matches a pattern here (substring match).
+# 2. scripts/setup-dev.ps1 also copies these patterns into .git/info/exclude,
+#    which makes git treat them as ignored entirely (won't even show as untracked).
+#
+# ACTIVATE
+# ────────
+#   pnpm run setup:dev       ← recommended (does both layers)
+#   — or manually:
+#   git config core.hooksPath .githooks
+#
+# ADDING YOUR OWN
+# ───────────────
+# Add a path or pattern below. It will be picked up by both layers after
+# re-running setup:dev (for the exclude layer) or immediately for the hook layer.
+
+# ── Internal planning documents ──────────────────────────────────────────────
+# Not ready for public view. May exist locally for AI context.
+docs/plans/next-implementation-plan.md
+docs/plans/MASTER-IMPLEMENTATION-PLAN.md
+docs/plans/future-backward-compatibility-plan.md
+docs/plans/Architecture Plan.md
+docs/plans/phases/
+
+# ── Developer-local AI configs ───────────────────────────────────────────────
+# CLAUDE.md / GEMINI.md are personal AI agent setup files.
+# AGENTS.md is committed intentionally — do not add it here.
+CLAUDE.md
+GEMINI.md
+
+# ── VS Code local config ─────────────────────────────────────────────────────
+# settings.json may contain personal workspace preferences.
+# mcp.json contains local MCP server paths (machine-specific).
+.vscode/mcp.json
+.vscode/settings.json
+
+# ── Debug / scratch files ────────────────────────────────────────────────────
+past_conversation.md
+
+# ── Internal docs not for public view ────────────────────────────────────────
+docs/Product Specs/
+
+# ── Agent memory / progress (machine-local state) ───────────────────────────
+.agent/progress.md
+.agent/memory/architecture.md
+

@@ -7,7 +7,7 @@ anchored-to:
   - packages/react/src/BlockPicker.tsx
   - packages/react/src/ToolbarPrimitives.tsx
   - packages/react/src/hooks.ts
-last-verified: 2026-03-06
+last-verified: 2026-03-20
 ---
 
 # Kanava Editor — Toolbar & Context Menu Architecture
@@ -787,3 +787,18 @@ The Image block defines `contextMenu: []` (empty). All block-level operations (d
 │  → view rebuild + toolbarStatePlugin re-derives state │
 └──────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 6. Additional Toolbar Components
+
+Beyond FormatBar and ContextMenu, the React package includes these toolbar-related components that also consume `toolbarStatePlugin` state:
+
+| Component | File | Purpose |
+|-----------|------|---------|
+| `FixedToolbar` | `packages/react/src/FixedToolbar.tsx` | Word-style ribbon toolbar (block type, font, marks, alignment, link, paragraph formatting). Uses `useToolbarState()` and `useSelectionInfo()`. |
+| `FindReplaceBar` | `packages/react/src/FindReplaceBar.tsx` | Search/replace UI. Uses `findReplacePlugin` state via `useFindReplace()` hook. |
+| `ZoomControls` | `packages/react/src/ZoomControls.tsx` | Zoom slider/buttons. Reads `editor.getZoom()` and calls `editor.setZoom()`. |
+| `DocumentTree` | `packages/react/src/DocumentTree.tsx` | Sidebar block hierarchy tree. Uses `documentStructurePlugin` state, not `toolbarStatePlugin`. |
+
+These components follow the same pattern as FormatBar: headless plugin derives state in core, React hook bridges to the component.

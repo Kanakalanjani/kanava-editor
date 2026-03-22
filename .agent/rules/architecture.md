@@ -97,16 +97,19 @@ When `canvasMode` is enabled in editor options:
 5. `placeholderPlugin` — Empty block placeholder text
 6. `dragHandlePlugin` — Drop handler
 7. `selectionPlugin` — CSS decoration classes for selected/focused blocks
-8. `ghostRailPlugin` — Hierarchy rails (skipped in canvas mode)
-9. `documentStructurePlugin` — Headless doc tree data (always on)
-10. `clipboardPlugin` — Multi-block copy/paste, ID clearing
-11. `imageUploadPlugin` — Drag/drop/paste image handling
-12. `toolbarStatePlugin` — Derives toolbar/menu state
-13. `paginationPlugin` — Page break decorations (if paginated)
-14. `interactionModePlugin` — Canvas mode interactions (if canvasMode)
-15. `history` — ProseMirror undo/redo
-16. `dropCursor` — Drop position indicator
-17. `gapCursor` — Cursor at edges of non-editable content
+8. `blockMultiSelectionPlugin` — Cross-block multi-selection via Shift+click/arrow
+9. `ghostRailPlugin` — Hierarchy rails (skipped in canvas mode)
+10. `documentStructurePlugin` — Headless doc tree data (always on)
+11. `clipboardPlugin` — Multi-block copy/paste, ID clearing
+12. `imageUploadPlugin` — Drag/drop/paste image handling
+13. `toolbarStatePlugin` — Derives toolbar/menu state
+14. `paginationPlugin` — Page break decorations (if paginated)
+15. `interactionModePlugin` — Canvas mode interactions (if canvasMode)
+16. `findReplacePlugin` — Find and replace across document
+17. `linkClickPlugin` — Handles link click navigation
+18. `history` — ProseMirror undo/redo
+19. `dropCursor` — Drop position indicator
+20. `gapCursor` — Cursor at edges of non-editable content
 
 ## Package-Level Skills
 
