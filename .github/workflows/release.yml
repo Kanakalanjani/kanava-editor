@@ -1,4 +1,8 @@
-name: Release Check
+# This workflow has been superseded by publish.yml
+# which handles automated versioning, npm publishing, and GitHub Releases.
+# Kept as a manual diagnostic tool — runs changeset status on demand.
+
+name: Release Check (Manual)
 
 on:
   workflow_dispatch:
